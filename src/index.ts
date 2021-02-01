@@ -22,10 +22,6 @@ const MAX_DEPTH = 3;
 const MAX_SIZE = 25;
 const REACT_FC_NAMES = ['SFC', 'StatelessComponent', 'FC', 'FunctionComponent'];
 
-function isNotTS(name: string): boolean {
-  return name.endsWith('.js') || name.endsWith('.jsx');
-}
-
 function isComponentName(name: string) {
   return !!name.match(/^[A-Z]/u);
 }
@@ -97,10 +93,6 @@ export default declare((api: any, options: PluginOptions, root: string) => {
           const state = (this as any).state as ConvertState;
 
           state.filePath = filename;
-
-          if (isNotTS(filename)) {
-            return;
-          }
 
           // if (options.typeCheck) {
           //   state.typeProgram = loadProgram(options.typeCheck, root);
@@ -428,10 +420,6 @@ export default declare((api: any, options: PluginOptions, root: string) => {
 
         exit(path: Path<t.Program>, { filename }: any) {
           const state = (this as any).state as ConvertState;
-
-          if (isNotTS(filename)) {
-            return;
-          }
 
           // Remove the `prop-types` import of no components exist,
           // and be sure not to remove pre-existing imports.
